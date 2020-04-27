@@ -13,6 +13,7 @@ const dir = './test/data/';
 const testFolder = './test/data';
 let testCaseNames = fs.readFileSync(dir + 'description.txt', 'utf8').toString().split('\n');
 
+const API_PREFIX = '/api/v1';
 
 describe('git_test ', function() {
 	this.timeout(120*1000);
@@ -33,7 +34,7 @@ describe('git_test ', function() {
 					let eve = JSON.parse(e);
 					if(eve.request.method == "DELETE") {
 						return chai.request(server)
-							.delete(eve.request.url)
+							.delete(API_PREFIX + eve.request.url)
 							.then((res) => {
 								return res;
 							}).catch((err) => {
@@ -42,7 +43,7 @@ describe('git_test ', function() {
 					}
 					if (eve.request.method == "GET") {
 						return chai.request(server)
-							.get(eve.request.url)
+							.get(API_PREFIX + eve.request.url)
 							.then((res) => {
 								return res;
 							}).catch((err) => {
@@ -51,7 +52,7 @@ describe('git_test ', function() {
 					}
 					if (eve.request.method == "POST") {
 						return chai.request(server)
-							.post(eve.request.url)
+							.post(API_PREFIX + eve.request.url)
 							.set(eve.request.headers)
 							.send(eve.request.body)
 							.then((res) => {
@@ -62,7 +63,7 @@ describe('git_test ', function() {
 					}
 					if(eve.request.method == "PUT") {
 						return chai.request(server)
-								   .put(eve.request.url)
+								   .put(API_PREFIX + eve.request.url)
 								   .set(eve.request.headers)
 								   .send(eve.request.body)
 								   .then((res) => {
